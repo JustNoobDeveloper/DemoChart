@@ -1,0 +1,186 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <canvas id="myChart"></canvas>
+    </div>
+    <div class="col-md-4">
+        <canvas id="BarChart"></canvas>
+    </div>
+    <div class="col-md-4">
+        <canvas id="PieChart"></canvas>
+    </div>
+</div>
+<div>
+    <canvas id="BubbleChart"></canvas>
+</div>
+
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+
+            $.ajax({
+                type: "GET",
+                url: "/Home/GetLineData",
+                success: function (results) {
+                    let labels = [];
+                    let data = [];
+                    results.forEach(function (result) {
+                        labels.push(result.month);
+                        data.push(result.count);
+                    });
+                    console.log(data);
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var chart = new Chart(ctx, {
+                        // the type of chart we want to create
+                        type: 'line',
+
+                        // the data for our datasets
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'my first dataset',
+                                backgroundcolor: 'rgb(255, 99, 132)',
+                                bordercolor: 'rgb(255, 99, 132)',
+                                data: data
+                            }]
+                        },
+
+                        // configuration options go here
+                        options: {}
+                    });
+                    
+                },
+                error: function () {
+                    console.log("test");
+                }
+            });
+
+            //TODO: ajax for bar chart
+            $.ajax({
+                type: "GET",
+                url: "/Home/GetBarData",
+                success: function (results) {
+                    let labels = [];
+                    let data = [];
+                    results.forEach(function (result) {
+                        labels.push(result.month);
+                        data.push(result.count);
+                    });
+                    console.log(data);
+                    var bar = document.getElementById('BarChart').getContext('2d');
+                    var chart = new Chart(bar, {
+                        // the type of chart we want to create
+                        type: 'bar',
+
+                        // the data for our datasets
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'my first dataset',
+                                backgroundcolor: 'rgb(255, 99, 132)',
+                                bordercolor: 'rgb(255, 99, 132)',
+                                data: data
+                            }]
+                        },
+
+                        // configuration options go here
+                        options: {}
+                    });
+                    
+
+                },
+                error: function () {
+                    console.log("test");
+                }
+            });
+            //TODO: ajax for pie chart
+            $.ajax({
+                type: "GET",
+                url: "/Home/GetPieData",
+                success: function (results) {
+                    let labels = [];
+                    let data = [];
+                    results.forEach(function (result) {
+                        labels.push(result.month);
+                        data.push(result.count);
+                    });
+                    console.log(data);
+                    var pie = document.getElementById('PieChart').getContext('2d');
+                    var chart = new Chart(pie, {
+                        // the type of chart we want to create
+                        type: 'pie',
+
+                        // the data for our datasets
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'my first dataset',
+                                backgroundcolor: 'rgb(255, 99, 132)',
+                                bordercolor: 'rgb(255, 99, 132)',
+                                data: data
+                            }]
+                        },
+
+                        // configuration options go here
+                        options: {}
+                    });
+                    
+
+                },
+                error: function () {
+                    console.log("test");
+                }
+            });
+           $.ajax({
+                type: "GET",
+                url: "/Home/GetBubbleData",
+                success: function (results) {
+                    let labels = [];
+                    let data = [];
+                    results.forEach(function (result) {
+                        labels.push(result.month);
+                        data.push(result.count);
+                    });
+                    console.log(data);
+                    var bubble = document.getElementById('BubbleChart').getContext('2d');
+                    var chart = new Chart(bubble, {
+                        // the type of chart we want to create
+                        type: 'bubble',
+
+                        // the data for our datasets
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'my first dataset',
+                                backgroundcolor: 'rgb(255, 99, 132)',
+                                bordercolor: 'rgb(255, 99, 132)',
+                                data: data
+                            }]
+                        },
+
+                        // configuration options go here
+                        options: {}
+                    });
+                    
+
+                },
+                error: function () {
+                    console.log("test");
+                }
+            });
+
+        });
+        
+
+    </script>
+
+}
